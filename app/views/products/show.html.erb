@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pid:</strong>
+  <%= @product.pid %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @product.uname %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @product.desc %>
+</p>
+
+<p>
+  <strong>Startbid:</strong>
+  <%= @product.startbid %>
+</p>
+
+<p>
+  <strong>Deadline:</strong>
+  <%= @product.deadline %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @product.contact %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <% if @product.image.thumb.url %><%= image_tag @product.image.thumb.url %><% end %>
+</p>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>
