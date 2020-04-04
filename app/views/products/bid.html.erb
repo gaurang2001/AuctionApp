@@ -1,0 +1,8 @@
+<% if Time.now > @product.deadline && @product.bb == current_user.id %>
+    <%= link_to 'Claim', claim_path %>
+<% end %>
+<% if Time.now > @product.deadline && @product.bb != current_user.id %>
+    <strong>Sorry, you're too late</strong>
+<% end %>
+
+<%= link_to 'Back', :back %>
