@@ -1,9 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Pid:</strong>
-  <%= @product.pid %>
-</p>
+<span style="float: right; display: inline;"> <% if @product.image.thumb.url %><%= image_tag @product.image.thumb.url %><% end %><br><br> </span>
 
 <p>
   <strong>Name:</strong>
@@ -36,9 +31,15 @@
 </p>
 
 <p>
-  <strong>Image:</strong>
-  <% if @product.image.thumb.url %><%= image_tag @product.image.thumb.url %><% end %>
+  <strong>Price:</strong>
+  <%= @product.price %>
 </p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<p>
+  <strong>Total no of bids:</strong>
+  <%= @product.tbid %>
+</p>
+
+<%= link_to 'Home', products_url %>
+<%= link_to 'Back', :back %>
+

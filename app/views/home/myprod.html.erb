@@ -1,0 +1,29 @@
+<h1>My Products</h1>
+
+    <% @products.each do |product| %>
+      <div class = "container123">
+        <span style="float: right; display: inline;"> <% if product.image.thumb.url %><%= image_tag product.image.thumb.url %><% end %><br><br> </span>
+        Name: <%= product.name %><br>
+        User: <%= product.uname %><br>
+        Startbid: <%= product.startbid %><br>
+        Deadline: <%= product.deadline.strftime("%Y-%m-%d %H:%M:%S") %>  UTC<br>
+        Contact: <%= product.contact %><br>
+        Price: <%= product.price %><br>
+        <%= link_to 'Show', product %><br>
+        <% if product.bb == nil && Time.now > product.deadline %>
+          <%= link_to 'Edit', edit_product_path(product) %><br>
+        <% elsif product.claimed_by != nil %>
+          <h4>Claimed by <%= User.find_by(id: product.claimed_by).name %> for <%= product.price %> </h4><br><br>
+        <% elsif Time.now < product.deadline && product.bb != nil %>
+          <h4>Bid by <%= User.find_by(id: product.bb).name %> for <%= product.price %> </h4><br><br>
+        <% end %>
+        <% if product.bb == nil %>
+          <%= link_to 'Delete', product, {confirm: 'Are you sure?', method: :delete} %>
+        <% end %>
+      </div>
+    <% end %>
+<br>
+
+<%= link_to 'New Product', new_product_path %><br>
+<%= link_to 'Claimed Products', claim_path %><br>
+<%= link_to 'Back', :back %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_04_140905) do
+ActiveRecord::Schema.define(version: 2020_04_05_204149) do
 
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "pid"
@@ -26,7 +26,10 @@ ActiveRecord::Schema.define(version: 2020_04_04_140905) do
     t.string "uname"
     t.float "price"
     t.integer "bb"
-    t.integer "tbid"
+    t.integer "tbid", default: 0
+    t.integer "claimed_by"
+    t.integer "pbid"
+    t.float "pbidprice"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 

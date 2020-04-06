@@ -1,0 +1,14 @@
+<h1>Claimed Products</h1>
+
+    <% @products.each do |product| %>
+      <div class = "container123">
+        <span style="float: right; display: inline;"> <% if product.image.thumb.url %><%= image_tag product.image.thumb.url %><% end %><br><br> </span>
+        Name: <%= product.name %><br>
+        Price: <%= product.price %><br>
+        <%= link_to 'Show', product %>
+      </div>
+    <% end %>
+<br>
+
+<%= link_to 'Home', products_path %><br>
+<%= link_to 'Back', :back %>

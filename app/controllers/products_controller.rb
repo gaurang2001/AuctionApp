@@ -6,6 +6,22 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
+    @products.each do |prod|
+      if prod.pid == 1
+        prod.bb = current_user.id
+        prod.tbid += 1
+        if prod.price <= prod.pbidprice && prod.tbid != 1
+          prod.bb = prod.pbid
+          prod.price = prod.pbidprice
+          prod.tbid -= 1
+        else
+          prod.pbidprice = prod.price
+          prod.pbid = prod.bb
+        end
+        prod.pid = 0
+        prod.save
+      end
+    end
   end
 
   # GET /products/1
@@ -21,12 +37,19 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
   end
-  
+
   def bid
-    @product = Product.find(params[:id])
-    @product.bb = current_user.id
-    @product.price = 1.1*@product.price
-    
+    if Time.now < @product.deadline
+        @product = Product.find(params[:id])
+        @product.bb = current_user.id
+        @product.tbid += 1
+    else
+      redirect_to products_url
+    end
+    if Time.now > @product.deadline && @product.bb == current_user.id
+      @product.claimed_by = current_user.id
+    end
+    @product.save
   end
 
   # POST /products
@@ -36,8 +59,10 @@ class ProductsController < ApplicationController
     @product.user = current_user
     @product.uname = current_user.name;
     @product.contact = current_user.contact;
+    @product.pid = 0
     Time.zone = "UTC"
-    @product.price = @product.startbid
+    @product.price = @product.startbid 
+    @product.pbidprice = @product.price
 
     respond_to do |format|
       if @product.save
@@ -53,6 +78,9 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
+    if params[:bid]
+      @product.pid = 1
+    end
     respond_to do |format|
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
@@ -82,6 +110,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:pid, :name, :uname, :desc, :startbid, :deadline, :contact, :image, :bb, :price, :tbid)
+      params.require(:product).permit(:pid, :name, :uname, :desc, :startbid, :deadline, :contact, :image, :bb, :price, :tbid, :claimed_by, :pbid, :pbidprice)
     end
 end
