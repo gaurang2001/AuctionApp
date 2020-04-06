@@ -1,19 +1,19 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Products</h1>
 
   <% @products.each do |product| %>
+    
     <% if Time.now <= product.deadline %>
+    <div class = "container123">
       <span style="float: right; display: inline;"> <% if product.image.thumb.url %><%= image_tag product.image.thumb.url %><% end %><br><br> </span>
-      Name: <%= product.name %><br><br>
+      Name:<%= product.name %><br><br>
       User: <%= product.uname %><br><br>
       Startbid: <%= product.startbid %><br><br>
-      Deadline: <%= product.deadline.strftime("%Y-%m-%d %H:%M:%S") %>  UTC<br><br>
-      Price: <%= product.price %><br><br>
+      Deadline: <%= product.deadline.strftime("%d-%m-%Y  %H:%M:%S") %>  UTC<br><br>
+      <% if product.tbid != 0 %>Price: <%= product.price %><% end %><br><br>
       <%= link_to 'Show', product %><br><br>
       <% if product.user_id != current_user.id %>
         <% if product.bb == current_user.id %>
-          You are the highest bidder
+          <strong>You are the highest bidder</strong>
         <% else %>
           <% if product.tbid > 0 %>
             <%= form_with(model: product, local: true) do |form| %>
@@ -26,19 +26,29 @@
           <% end %>
         <% end %>
       <% end %>
-      <hr>   
+    </div> 
     <% end %>
     <% if Time.now > product.deadline && product.bb == current_user.id && product.claimed_by == nil && product.user_id != current_user.id %>
+    <div class = "container123">
       <span style="float: right; display: inline;"> <% if product.image.thumb.url %><%= image_tag product.image.thumb.url %><% end %><br><br> </span>
       Name: <%= product.name %><br><br>
       User: <%= product.uname %><br><br>
       Contact: <%= product.contact %><br><br>
       Price: <%= product.price %><br><br>
       <%= link_to 'Claim', product, method: :bid %>
-    <% end %>
+    </div>
+    <% end %> 
 
   <% end %>
-  
-
+    <% flag = 0 %>
+    <% @products.each do |product| %>
+      <% if Time.now < product.deadline %>
+        <% flag = 1 %>
+      <% end %>
+    <% end %>
+    <% if flag == 0 %>
+      <center><br><br><h3> --- Nothing to show here --- </h3><br><br></center>
+      <%= link_to 'New Product', new_product_path %>
+    <% end %> 
 
 <br><br>

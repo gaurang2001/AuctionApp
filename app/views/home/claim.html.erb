@@ -3,8 +3,10 @@
     <% @products.each do |product| %>
       <div class = "container123">
         <span style="float: right; display: inline;"> <% if product.image.thumb.url %><%= image_tag product.image.thumb.url %><% end %><br><br> </span>
-        Name: <%= product.name %><br>
-        Price: <%= product.price %><br>
+        Name: <%= product.name %><br><br>
+        User: <%= product.uname %><br><br>
+        Contact: <%= product.contact %><br><br>
+        <% if product.tbid != 0 %>Price: <%= product.price %><% end %><br><br>
         <%= link_to 'Show', product %>
       </div>
     <% end %>

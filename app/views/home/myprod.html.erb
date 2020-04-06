@@ -3,27 +3,36 @@
     <% @products.each do |product| %>
       <div class = "container123">
         <span style="float: right; display: inline;"> <% if product.image.thumb.url %><%= image_tag product.image.thumb.url %><% end %><br><br> </span>
-        Name: <%= product.name %><br>
-        User: <%= product.uname %><br>
-        Startbid: <%= product.startbid %><br>
-        Deadline: <%= product.deadline.strftime("%Y-%m-%d %H:%M:%S") %>  UTC<br>
-        Contact: <%= product.contact %><br>
-        Price: <%= product.price %><br>
-        <%= link_to 'Show', product %><br>
+        Name: <%= product.name %><br><br>
+        User: <%= product.uname %><br><br>
+        Startbid: <%= product.startbid %><br><br>
+        Deadline: <%= product.deadline.strftime("%d-%m-%Y %H:%M:%S") %>  UTC<br><br>
+        Contact: <%= product.contact %><br><br>
+        <% if product.tbid != 0 %>Price: <%= product.price %><% end %><br><br>
+        <%= link_to 'Show', product %><br><br>
         <% if product.bb == nil && Time.now > product.deadline %>
-          <%= link_to 'Edit', edit_product_path(product) %><br>
+          <%= link_to 'Edit', edit_product_path(product) %><br><br>
         <% elsif product.claimed_by != nil %>
           <h4>Claimed by <%= User.find_by(id: product.claimed_by).name %> for <%= product.price %> </h4><br><br>
-        <% elsif Time.now < product.deadline && product.bb != nil %>
+        <% elsif product.bb != nil %>
           <h4>Bid by <%= User.find_by(id: product.bb).name %> for <%= product.price %> </h4><br><br>
         <% end %>
         <% if product.bb == nil %>
-          <%= link_to 'Delete', product, {confirm: 'Are you sure?', method: :delete} %>
+          <%= link_to 'Delete', product, {confirm: 'Are you sure?', method: :delete} %><br><br>
         <% end %>
       </div>
     <% end %>
+    <% flag = 0 %>
+    <% @products.each do |product| %>
+      <% if product.user_id == current_user.id %>
+        <% flag = 1 %>
+      <% end %>
+    <% end %>
+    <% if flag == 0 %>
+      <center><br><br><h3> --- Nothing to show here --- </h3><br><br></center>
+    <% end %> 
 <br>
-
-<%= link_to 'New Product', new_product_path %><br>
-<%= link_to 'Claimed Products', claim_path %><br>
+<br>
+<%= link_to 'New Product', new_product_path %><br><br>
+<%= link_to 'Claimed Products', claim_path %><br><br>
 <%= link_to 'Back', :back %>

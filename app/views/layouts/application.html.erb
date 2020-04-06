@@ -2,38 +2,38 @@
 <html>
 <head>
 <title>Auction</title>
-   <%= csrf_meta_tags %>
-   <%= stylesheet_link_tag    'application', media: 'all',
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag    'application', media: 'all',
                               'data-turbolinks-track': 'reload' %>
-   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
- </head>
- <body>
- <header class="navbar navbar-fixed-top navbar-inverse">
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+<header class="navbar navbar-fixed-top navbar-inverse">
     <div class="my-header">
-     <h1>Auction</h1>
-     <span>
-     <div class="container">
-     <nav>
-       <ul class="nav navbar-nav navbar-right">
-         <li><%= link_to "Home",   products_path , class: "btn "%></li>
-         <li><% Time.zone="UTC" %><%= Time.zone.now.strftime("%Y-%m-%d %H:%M:%S") %>  UTC</li>
-         <% if user_signed_in? %>
-           <li><%= link_to current_user.name, edit_user_registration_path, class: "btn "  %></li>
-           <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %></li>
-           <li><%= link_to "My Products", myprod_path, class: " btn" %></li>
-         <% else %>
-           <li><%= link_to "Sign Up", new_user_registration_path, class: "btn " %></li>
-           <li><%= link_to "Sign In", new_user_session_path, class: "btn " %></li>          
-         <% end %>
-       </ul>
-     </nav>
-     </div>
-     </span>
+    <h1>AuctionHouse</h1>
+    <span>
+    <div class="container">
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><% Time.zone="UTC" %><%= Time.zone.now.strftime("%d-%m-%Y %H:%M:%S") %>  UTC</li>
+        <li><%= link_to "Home",   products_path , class: "btn "%></li>
+        <% if user_signed_in? %>
+          <li><%= link_to current_user.name, edit_user_registration_path, class: "btn "  %></li>
+          <li><%= link_to "My Products", myprod_path, class: " btn" %></li>
+          <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %></li>
+        <% else %>
+          <li><%= link_to "Sign Up", new_user_registration_path, class: "btn " %></li>
+          <li><%= link_to "Sign In", new_user_session_path, class: "btn " %></li>          
+        <% end %>
+      </ul>
+    </nav>
     </div>
- </header>
- <div class="container">
+    </span>
+    </div>
+</header>
+<div class="container">
    <%= yield %>
- </div>
+</div>
  
- </body>
- </html>
+</body>
+</html>

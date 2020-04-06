@@ -4,4 +4,7 @@
 <% if Time.now > @product.deadline && @product.bb != current_user.id %>
     <strong>Sorry, you're too late</strong>
 <% end %>
+
+<%= render 'show', product: @product %>
+
 <%= link_to 'Back', :back %>

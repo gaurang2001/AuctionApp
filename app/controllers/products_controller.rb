@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
   def index
     @products = Product.all
     @products.each do |prod|
-      if prod.pid == 1
+      if prod.pid == 1 # pid is a flag
         prod.bb = current_user.id
         prod.tbid += 1
         if prod.price <= prod.pbidprice && prod.tbid != 1
@@ -38,6 +38,7 @@ class ProductsController < ApplicationController
   def edit
   end
 
+  # POST products/1
   def bid
     if Time.now < @product.deadline
         @product = Product.find(params[:id])

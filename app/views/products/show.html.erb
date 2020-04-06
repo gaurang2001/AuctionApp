@@ -1,8 +1,10 @@
+
+
 <span style="float: right; display: inline;"> <% if @product.image.thumb.url %><%= image_tag @product.image.thumb.url %><% end %><br><br> </span>
 
 <p>
-  <strong>Name:</strong>
-  <%= @product.name %>
+  <h4><%= @product.name %></h4>
+  
 </p>
 
 <p>
@@ -22,7 +24,7 @@
 
 <p>
   <strong>Deadline:</strong>
-  <%= @product.deadline %>
+  <%= @product.deadline.strftime("%d-%m-%Y  %H:%M:%S") %>
 </p>
 
 <p>
@@ -30,15 +32,20 @@
   <%= @product.contact %>
 </p>
 
-<p>
+<% if @product.tbid != 0 %><p>
   <strong>Price:</strong>
   <%= @product.price %>
-</p>
+</p><% end %>
 
 <p>
   <strong>Total no of bids:</strong>
   <%= @product.tbid %>
 </p>
+
+<br>
+<br>
+<br>
+<br>
 
 <%= link_to 'Home', products_url %>
 <%= link_to 'Back', :back %>
