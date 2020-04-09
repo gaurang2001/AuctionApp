@@ -2,12 +2,7 @@ Rails.application.routes.draw do
   
   # Custom registrations controller to be used
   devise_for :users, controllers: { registrations: 'registrations'}
-  resources :products do
-    member do
-      patch :bb
-      patch :claimed_by
-    end
-  end
+  resources :products 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
